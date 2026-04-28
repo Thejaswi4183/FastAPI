@@ -55,7 +55,7 @@ def load_assets():
         download_if_missing(PKL_FILE_ID, "tokenizer.pkl")
 
         print("Loading model...")
-        model = tf.keras.models.load_model("model.keras")
+        model = tf.keras.models.load_model("model.keras", compile=False)
 
         print("Loading tokenizer...")
         with open("tokenizer.pkl", "rb") as f:

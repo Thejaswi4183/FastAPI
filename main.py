@@ -29,11 +29,12 @@ app.add_middleware(
 # Load environment variables
 load_dotenv()
 
-KERAS_FILE_ID = os.getenv("KERAS_FILE_ID")
-PKL_FILE_ID = os.getenv("PKL_FILE_ID")
+# 🔴 UPDATED ENV VARIABLES
+MODEL_FILE_ID = os.getenv("MODEL_FILE_ID")
+TOKENIZER_FILE_ID = os.getenv("TOKENIZER_FILE_ID")
 
-if not KERAS_FILE_ID or not PKL_FILE_ID:
-    raise ValueError("Missing Google Drive File IDs in environment variables")
+if not MODEL_FILE_ID or not TOKENIZER_FILE_ID:
+    raise ValueError("Missing Google Drive File IDs")
 
 # Globals
 model = None
@@ -47,15 +48,15 @@ def download_if_missing(file_id, filename):
         url = f"https://drive.google.com/uc?id={file_id}"
         gdown.download(url, filename, quiet=False)
 
-# Lazy load model
+# 🔴 UPDATED load_assets()
 def load_assets():
     global model, tokenizer
     if model is None:
-        download_if_missing(KERAS_FILE_ID, "model.keras")
-        download_if_missing(PKL_FILE_ID, "tokenizer.pkl")
+        download_if_missing(MODEL_FILE_ID, "model.h5")
+        download_if_missing(TOKENIZER_FILE_ID, "tokenizer.pkl")
 
         print("Loading model...")
-        model = tf.keras.models.load_model("model.keras", compile=False)
+        model = tf.keras.models.load_model("model.h5", compile=False)
 
         print("Loading tokenizer...")
         with open("tokenizer.pkl", "rb") as f:

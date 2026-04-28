@@ -52,11 +52,11 @@ def download_if_missing(file_id, filename):
 def load_assets():
     global model, tokenizer
     if model is None:
-        download_if_missing(MODEL_FILE_ID, "model.h5")
+        download_if_missing(MODEL_FILE_ID, "model_fixed.h5")
         download_if_missing(TOKENIZER_FILE_ID, "tokenizer.pkl")
 
         print("Loading model...")
-        model = tf.keras.models.load_model("model.h5", compile=False)
+        model = tf.keras.models.load_model("model_fixed.h5", compile=False)
 
         print("Loading tokenizer...")
         with open("tokenizer.pkl", "rb") as f:
